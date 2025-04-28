@@ -1,0 +1,7 @@
+fastapi==0.111.0
+uvicorn==0.29.0
+SQLAlchemy==2.0.30
+pymysql==1.1.1
+redis==5.0.3
+python-dotenv
+cryptography>=42.0.0
