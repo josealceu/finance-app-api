@@ -36,6 +36,22 @@ app.get('/resumo-geral', async (_req,res)=>{
   res.json(data);
 });
 
+// ------------- Editar pelo ID -------------
+app.patch('/editar/:id', async (req,res)=>{
+  const { id } = req.params;
+  try{
+    const { data } = await axios.put(`${REGISTER_URL}/transacoes/${id}`, req.body);
+    // invalida todos os caches relevantes
+    await redis.del('cache:resumo-geral');
+    await redis.del('cache:cat:ganho');
+    await redis.del('cache:cat:gasto');
+    await redis.del('cache:tx:all:all');
+    res.json({ id, message: 'Editado com sucesso', data });
+  }catch(e){
+    res.status(e?.response?.status||500).json({ error: e?.response?.data || 'erro ao editar' });
+  }
+});
+
 app.get('/categoria/:nome', async (req,res)=>{
   const cat=req.params.nome;
   const key=`cache:cat:${cat}`;
