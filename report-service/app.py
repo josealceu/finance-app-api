@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Query
 from sqlalchemy import create_engine, text
 import redis, os, datetime as dt
-from functools import wraps   
+from functools import wraps   #  ✅ mantém assinatura original
 
 engine = create_engine(os.getenv('DB_URL'), pool_pre_ping=True)
 redis_cli = redis.Redis.from_url(os.getenv('REDIS_URL','redis://redis:6379'), decode_responses=True)
